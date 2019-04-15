@@ -7,7 +7,7 @@
 		echo "<script type='text/javascript'> window.location.href = '../index.php';</script>";
 	} else {
 
-	$stmt=$pdo->prepare("SELECT * FROM employee");
+	$stmt=$pdo->prepare("SELECT * FROM orders");
 	$stmt->execute();
 
 	$stmt2=$pdo->prepare("SELECT * FROM employee WHERE e_id = ?");
@@ -70,7 +70,7 @@
                             </div>
                         </li>
 
-                         <li class="mb-2">
+                        <li class="mb-2">
                           <a href="order_list.php" class="collapsible-header waves-effect "style="font-size: 16px;"><i class="fas fa-cash-register"></i>&nbsp; รายการขายสินค้าทั้งหมด </a>
                         </li>
 
@@ -271,41 +271,48 @@
 
     <main>
     	<div class="container-fluid" style="background-color: #ffffff; border-radius: 20px; padding: 20px;box-shadow: 0px 0px 25px 10px #1e272e; margin-top: 50px; padding: 50px;">
-    		<div class="form-group text-center ">
-    			<label class="text-primary text-center" style="font-size: 35px;"> สมาชิกลูกค้า </label>
+    		<div class="form-group  text-center ">
+    			<label class="text-primary" style="font-size: 35px;"> รายการสั่งซื้อจากสำนักพิมพ์ </label>
     		</div><br>
     		<div class="table-responsive text-nowrap">
     			<table class="table table-hover">
-	    			<thead class="text-primary text-center">
-	    				<tr>
-	    					<th style="font-size: 24px;"> รหัสพนักงาน</th>
-	    					<th style="font-size: 24px;"> ชื่อ </th>
-	    					<th style="font-size: 24px;"> นามสกุล </th>	    					
-	    					<th style="font-size: 24px;"> ที่อยู่ </th>
-	    					<th style="font-size: 24px;"> จังหวัด </th>
-	    					<th style="font-size: 24px;"> ประเทศ </th>
-	    					<th style="font-size: 24px;"> รหัสไปรษณีย์ </th>
-	    					<th style="font-size: 24px;"> เบอร์โทรศัพท์ </th>
-	    				</tr>
-	    			</thead>
-	    			<tbody class="text-center">
-	    				<?php 
-	    					while ($employeeList=$stmt->fetch()) { ?>
-	    						<tr>
-	    							<td style="font-size: 18px;"> <?=$employeeList['e_id']?> </td>
-	    							<td style="font-size: 18px;"> <?=$employeeList['e_name']?> </td>
-	    							<td style="font-size: 18px;"> <?=$employeeList['e_surname']?> </td>
-	    							<td style="font-size: 18px;"> <?=$employeeList['e_address']?> </td>
-	    							<td style="font-size: 18px;"> <?=$employeeList['e_district']?> </td>
-	    							<td style="font-size: 18px;"> <?=$employeeList['e_province']?> </td>
-	    							<td style="font-size: 18px;"> <?=$employeeList['e_postcode']?> </td>
-	    							<td style="font-size: 18px;"> <?=$employeeList['e_tel']?> </td>
-	    						</tr>
-	    					<?php }
-	    				?>
-	    			</tbody>
-	    		</table>
-    		</div>   		
+					<thead class="text-primary  text-center">
+						<tr>
+							<th style="font-size: 24px;">รหัสสั่งซื้อ</th>
+							<th style="font-size: 24px;">รหัสหนังสือ</th>
+							<th style="font-size: 24px;">ชื่อสำนักพิมพ์</th>
+							<th style="font-size: 24px;">จำนวนที่สั่ง</th>
+							<th style="font-size: 24px;">ราคา</th>
+							<th style="font-size: 24px;">ราคารวม</th>
+							<th style="font-size: 24px;">วันที่สั่ง</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody class=" text-center">
+						<?php 
+							while ($order_list_publisher=$stmt->fetch()) { ?>
+								<tr>
+									<td style="font-size: 18px;"> <?=$order_list_publisher['o_id']?> </td>
+									<td style="font-size: 18px;"><?=$order_list_publisher['b_id']?></td>
+									<td style="font-size: 18px;">
+										<?php 
+											$stmt3=$pdo->prepare("SELECT p_name FROM publisher WHERE p_id = ?");
+											$stmt3->bindParam(1,$order_list_publisher['p_id']);
+											$stmt3->execute();
+											$p_name = $stmt3->fetch();
+										 ?>
+										<?=$p_name['p_name']?>	
+									</td>
+									<td style="font-size: 18px;"><?=$order_list_publisher['o_qty']?> เล่ม</td>
+									<td style="font-size: 18px;"><?=$order_list_publisher['o_price']?> บาท</td>
+									<td style="font-size: 18px;"><?=$order_list_publisher['o_total']?> บาท</td>
+									<td style="font-size: 18px;"><?=$order_list_publisher['o_date']?> </td>
+								</tr>
+							<?php } 				
+						?>
+					</tbody>
+				</table>
+    		</div>		
 		</div>
     </main>
 		

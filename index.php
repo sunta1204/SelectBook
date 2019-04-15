@@ -15,7 +15,7 @@
 	  <link href="css/style.css" rel="stylesheet">
 </head>
 
-<body class="fixed-sn pink-skin" style="background-color: #eeeeee;">
+<body class="fixed-sn pink-skin" style="background-image: url('https://mdbootstrap.com/img/Photos/Others/images/91.jpg');" >
 
   <!-- Start your project here-->
   <!--Double navigation-->
@@ -26,7 +26,7 @@
                 <!-- Logo -->
                 <li>
                     <div class="logo-wrapper waves-light">
-                        <a href="index.html"><p class="text-white text-center" style="font-size: 24px;">Select Book</p></a>
+                        <a href="index.php"><p class="text-white text-center" style="font-size: 24px;">Select Book</p></a>
                     </div>
                 </li>
                 <!--/. Logo -->
@@ -34,32 +34,8 @@
                 <li>
                     <ul class="collapsible collapsible-accordion">
                       <li class="mb-2">
-                        <a href="index.html" class="waves-effect" style="font-size: 18px;"><i class="fas fa-home"></i>&nbsp; Home </a>
+                        <a href="index.php" class="waves-effect" style="font-size: 18px;"><i class="fas fa-home"></i>&nbsp; Home </a>
                       </li>
-
-                        <li class="mb-2">
-                          <a href="gallery.html" class="collapsible-header waves-effect" style="font-size: 18px;"><i class="fas fa-camera-retro"></i>&nbsp;Gallery</a> 
-                        </li>
-
-                        <li class="mb-2" >
-                          <a class="collapsible-header waves-effect arrow-r" style="font-size: 18px;"><i class="far fa-hand-pointer"></i>&nbsp; Room Type <i class="fas fa-angle-down rotate-icon"></i></a>
-                            <div class="collapsible-body">
-                                <ul class="list-unstyled">
-                                    <li><a href="air_room.html" class="waves-effect" style="font-size: 14px;">Air-conditioned Room</a>
-                                    </li>
-                                    <li><a href="fan_room.html" class="waves-effect" style="font-size: 14px;">Fan Room</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-
-                        <li  class="mb-2">
-                          <a href="location.html" class="collapsible-header waves-effect "style="font-size: 18px;"><i class="fas fa-location-arrow"></i>&nbsp; Location </a>
-                        </li>
-
-                        <li class="mb-2">
-                          <a href="room_detail.html" class="collapsible-header waves-effect "style="font-size: 18px;"><i class="fas fa-info-circle"></i>&nbsp; Room details </a>
-                        </li>
 
                     </ul>
                 </li>
@@ -76,18 +52,18 @@
             </div>
             <!-- Breadcrumb-->
             <div class="breadcrumb-dn mr-auto">
-                <a href="index.html" class="btn btn-outline-light"> Select Book </a>
+                <a href="index.php" class="btn btn-outline-light"> Select Book </a>
             </div>
             <ul class="nav navbar-nav nav-flex-icons ml-auto">
-                <li class="nav-item">
-                  <a class="nav-link"><i class="fas fa-cash-register"></i>&nbsp; <span class="clearfix d-none d-sm-inline-block">Book Room</span></a>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link" data-target="#login" data-toggle="modal" ><i class="fas fa-user"></i>&nbsp; <span class="clearfix d-none d-sm-inline-block">LogIn</span></a>
                 </li>    
             </ul>
         </nav>
+
+
         <!-- /.Navbar -->
+
     </header>
     <!--/.Double navigation-->
 
@@ -107,13 +83,13 @@
 		        <div class="md-form mb-5">
 		          <i class="fas fa-envelope prefix grey-text"></i>
 		          <input type="text" id="e_id" name="e_id" class="form-control validate">
-		          <label data-error="wrong" data-success="right" for="defaultForm-email">Your ID</label>
+		          <label data-error="wrong" data-success="right" for="e_id">Your ID</label>
 		        </div>
 
 		        <div class="md-form mb-4">
 		          <i class="fas fa-lock prefix grey-text"></i>
 		          <input type="password" id="e_tel" name="e_tel" class="form-control validate">
-		          <label data-error="wrong" data-success="right" for="defaultForm-pass">Phone Number</label>
+		          <label data-error="wrong" data-success="right" for="e_tel">Phone Number</label>
 		        </div>
 
 		      </div>
@@ -128,32 +104,25 @@
 
    <!--Main layout-->
     <main>
-        
-        <div class="container-fluid text-center" >
-            <!--Card-->
-            <div class="card card-cascade wider reverse my-4 pb-5">
-                <!--Card image-->
-                <div class="view view-cascade overlay zoom fadeIn" >
-                    <img src="pic/home.jpg" class="img-fluid rounded mx-auto d-block  hoverable" >
-                    <a href="">
-                        <div class="mask rgba-white-slight"></div>
-                    </a>
+       <!-- Mask & flexbox options-->
+            <div class="mask rgba-black-light align-items-center waves-effect waves-light" style="margin-top: 250px;margin-bottom: 300px;">
+              <!-- Content -->
+              <div class="container">
+                <!--Grid row-->
+                <div class="row">
+                  <!--Grid column-->
+                  <div class="col-md-12 mb-4 white-text text-center">
+                    <h1 class="h1-reponsive white-text text-uppercase font-weight-bold mb-0 pt-md-5 pt-5 wow fadeInDown" data-wow-delay="0.3s"><strong>Welcome To Select Book</strong></h1>
+                    <hr class="hr-light my-4 wow fadeInDown" data-wow-delay="0.4s">
+                    <button data-target="#login" data-toggle="modal" class="btn btn-outline-white wow fadeInDown" data-wow-delay="0.4s">Log In</button>
+                  </div>
+                  <!--Grid column-->
                 </div>
-                <!--/Card image-->
-                <!--Card content-->
-                <div class="card-body card-body-cascade text-center wow fadeIn" data-wow-delay="0.2s">
-                    <!--Title-->
-                    <h3 class="card-title"><strong>หอพักบ้านวิบูรณ์</strong></h3>
-                    <p class="card-text"> โทรศัพท์ 085-0035565 </p>
-                    <p class="card-text"> ( คุณลารัลย์ อรุณเดชาชัย ) </p>
-                    <a href="gallery.html" class="btn btn-primary btn-lg">Gallery</a>
-                    <a href="location.html" class="btn btn-secondary btn-lg">Location</a>
-                    <a href="room_detail.html" class="btn btn-default btn-lg">Details</a>
-                </div>
-                <!--/.Card content-->
+                <!--Grid row-->
+              </div>
+              <!-- Content -->
             </div>
-            <!--/.Card-->
-        </div>  
+            <!-- Mask & flexbox options-->
     </main>
     <!--/Main layout-->
 

@@ -7,7 +7,7 @@
 		echo "<script type='text/javascript'> window.location.href = '../index.php';</script>";
 	} else {
 
-	$stmt=$pdo->prepare("SELECT * FROM employee");
+	$stmt=$pdo->prepare("SELECT * FROM book");
 	$stmt->execute();
 
 	$stmt2=$pdo->prepare("SELECT * FROM employee WHERE e_id = ?");
@@ -20,7 +20,7 @@
 	<!DOCTYPE html>
 	<html>
 	<head>
-		<title>Employee Index</title>
+		<title>Sale Book</title>
 		<meta charset="utf-8">
   		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   		<meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -271,41 +271,39 @@
 
     <main>
     	<div class="container-fluid" style="background-color: #ffffff; border-radius: 20px; padding: 20px;box-shadow: 0px 0px 25px 10px #1e272e; margin-top: 50px; padding: 50px;">
-    		<div class="form-group text-center ">
-    			<label class="text-primary text-center" style="font-size: 35px;"> สมาชิกลูกค้า </label>
+    		<div class="form-group  text-center ">
+    			<label class="text-primary" style="font-size: 35px;"> รายการหนังสือ </label>
     		</div><br>
     		<div class="table-responsive text-nowrap">
     			<table class="table table-hover">
-	    			<thead class="text-primary text-center">
-	    				<tr>
-	    					<th style="font-size: 24px;"> รหัสพนักงาน</th>
-	    					<th style="font-size: 24px;"> ชื่อ </th>
-	    					<th style="font-size: 24px;"> นามสกุล </th>	    					
-	    					<th style="font-size: 24px;"> ที่อยู่ </th>
-	    					<th style="font-size: 24px;"> จังหวัด </th>
-	    					<th style="font-size: 24px;"> ประเทศ </th>
-	    					<th style="font-size: 24px;"> รหัสไปรษณีย์ </th>
-	    					<th style="font-size: 24px;"> เบอร์โทรศัพท์ </th>
-	    				</tr>
-	    			</thead>
-	    			<tbody class="text-center">
-	    				<?php 
-	    					while ($employeeList=$stmt->fetch()) { ?>
-	    						<tr>
-	    							<td style="font-size: 18px;"> <?=$employeeList['e_id']?> </td>
-	    							<td style="font-size: 18px;"> <?=$employeeList['e_name']?> </td>
-	    							<td style="font-size: 18px;"> <?=$employeeList['e_surname']?> </td>
-	    							<td style="font-size: 18px;"> <?=$employeeList['e_address']?> </td>
-	    							<td style="font-size: 18px;"> <?=$employeeList['e_district']?> </td>
-	    							<td style="font-size: 18px;"> <?=$employeeList['e_province']?> </td>
-	    							<td style="font-size: 18px;"> <?=$employeeList['e_postcode']?> </td>
-	    							<td style="font-size: 18px;"> <?=$employeeList['e_tel']?> </td>
-	    						</tr>
-	    					<?php }
-	    				?>
-	    			</tbody>
-	    		</table>
-    		</div>   		
+					<thead class="text-primary  text-center">
+						<tr>
+							<th style="font-size: 24px;">รหัสหนังสือ</th>
+							<th style="font-size: 24px;">ชื่อหนังสือ</th>
+							<th style="font-size: 24px;">ผู้แต่ง</th>
+							<th style="font-size: 24px;">ราคา</th>
+							<th style="font-size: 24px;">จำนวน</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody class=" text-center">
+						<?php 
+							while ($bookList=$stmt->fetch()) { ?>
+								<tr>
+									<td style="font-size: 18px;"> <?=$bookList['b_id']?> </td>
+									<td style="font-size: 18px;"><?=$bookList['b_name']?></td>
+									<td style="font-size: 18px;"><?=$bookList['b_author']?></td>
+									<td style="font-size: 18px;"><?=$bookList['b_price']?> บาท</td>
+									<td style="font-size: 18px;"><?=$bookList['b_stock']?> เล่ม</td>
+									<td> 
+										<a href="sale/order.php?b_id=<?=$bookList['b_id']?>" class="btn btn-outline-primary waves-effect" id="order<?=$bookList['b_id']?>"><i class="fas fa-shopping-cart"></i>&nbsp; เพิ่มสินค้า</a> 
+									</td>
+								</tr>
+							<?php } 				
+						?>
+					</tbody>
+				</table>
+    		</div>		
 		</div>
     </main>
 		

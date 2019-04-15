@@ -57,29 +57,33 @@
                         <li class="mb-2">
                           <a data-target="#add_book" data-toggle="modal" class="collapsible-header waves-effect" style="font-size: 18px;"><i class="fas fa-book"></i>&nbsp; เพิ่มหนังสือ</a> 
                         </li>
-                        <!--
+
                         <li class="mb-2" >
-                          <a class="collapsible-header waves-effect arrow-r" style="font-size: 18px;"><i class="far fa-hand-pointer"></i>&nbsp; Room Type <i class="fas fa-angle-down rotate-icon"></i></a>
+                          <a class="collapsible-header waves-effect arrow-r" style="font-size: 16px;"><i class="fas fa-shopping-cart"></i>&nbsp; สั่งซื้อและขายสินค้า <i class="fas fa-angle-down rotate-icon"></i></a>
                             <div class="collapsible-body">
                                 <ul class="list-unstyled">
-                                    <li><a href="air_room.html" class="waves-effect" style="font-size: 14px;">Air-conditioned Room</a>
+                                    <li><a href="order.php" class="waves-effect" style="font-size: 14px;"><i class="fas fa-shopping-cart"></i>&nbsp; สั่งซื้อหนังสือกับสำนักพิมพ์</a>
                                     </li>
-                                    <li><a href="fan_room.html" class="waves-effect" style="font-size: 14px;">Fan Room</a>
+                                    <li><a href="sales.php" class="waves-effect" style="font-size: 14px;"><i class="fas fa-shopping-cart"></i>&nbsp; ขายสินค้า</a>
                                     </li>
                                 </ul>
                             </div>
-                        </li> -->
+                        </li>
 
-                        <li  class="mb-2">
-                          <a href="order.php" class="collapsible-header waves-effect "style="font-size: 18px;"><i class="fas fa-shopping-cart"></i>&nbsp; รายการสั่งซื้อ </a>
+                          <li class="mb-2">
+                          <a href="order_list.php" class="collapsible-header waves-effect "style="font-size: 16px;"><i class="fas fa-cash-register"></i>&nbsp; รายการขายสินค้าทั้งหมด </a>
+                        </li>
+
+                         <li class="mb-2">
+                          <a href="order_list_publisher.php" class="collapsible-header waves-effect "style="font-size: 16px;"><i class="fas fa-cash-register"></i>&nbsp; รายการสั่งซื้อจากสำนักพิมพ์ </a>
                         </li>
 
                         <li class="mb-2">
-                          <a href="customer_list.php" class="collapsible-header waves-effect "style="font-size: 18px;"><i class="fas fa-user"></i>&nbsp; สมากชิกลูกค้า </a>
+                          <a href="customer_list.php" class="collapsible-header waves-effect "style="font-size: 18px;"><i class="fas fa-user"></i>&nbsp; สมาชิกลูกค้า </a>
                         </li>
 
                         <li class="mb-2">
-                          <a href="employee_list.php" class="collapsible-header waves-effect "style="font-size: 18px;"><i class="fas fa-user-tie"></i>&nbsp; สมากชิกพนักงาน </a>
+                          <a href="employee_list.php" class="collapsible-header waves-effect "style="font-size: 18px;"><i class="fas fa-user-tie"></i>&nbsp; สมาชิกพนักงาน </a>
                         </li>
 
                     </ul>
@@ -212,20 +216,6 @@
 							<!--Card content-->
 							<div class="card-body px-lg-5 pt-0 my-4">
 								<div class="form-row">			            
-								    <div class="col">
-								        <?php 
-								        $order_id = rand(0,9); 
-								        $order_id .= rand(0,9);
-								        $order_id .= rand(0,9);
-								        $order_id .= rand(0,9);
-								        $order_id .= rand(0,9);
-								        ?>
-								        <div class="md-form">
-								            <i class="fas fa-file-signature prefix"></i>
-								            <input type="text" id="b_id" required="" name="b_id" class="form-control" readonly="" value="<?=$order_id?>">
-								            <label for="b_id">รหัสหนังสือ</label>
-								        </div>					                   
-								    </div>
 								    <div class="col">
 								        <div class="md-form">
 								            <i class="fas fa-book prefix"></i>

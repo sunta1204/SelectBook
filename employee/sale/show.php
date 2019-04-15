@@ -1,13 +1,13 @@
-<?php 
+﻿<?php 
 	session_start();
-	include '../connect.php';
+	include '../../connect.php';
 
 	if (empty($_SESSION['e_id'])) {
 		setcookie('login_error',1,time()+5,'/');
 		echo "<script type='text/javascript'> window.location.href = '../index.php';</script>";
 	} else {
 
-	$stmt=$pdo->prepare("SELECT * FROM employee");
+	$stmt=$pdo->prepare("SELECT * FROM book");
 	$stmt->execute();
 
 	$stmt2=$pdo->prepare("SELECT * FROM employee WHERE e_id = ?");
@@ -20,19 +20,26 @@
 	<!DOCTYPE html>
 	<html>
 	<head>
-		<title>Employee Index</title>
+		<title>Sale Book</title>
 		<meta charset="utf-8">
   		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   		<meta http-equiv="x-ua-compatible" content="ie=edge">
   		<!-- Font Awesome -->
 	  	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 	  	<!-- Bootstrap core CSS -->
-	  	<link href="../css/bootstrap.min.css" rel="stylesheet">
+	  	<link href="../../css/bootstrap.min.css" rel="stylesheet">
 	  	<!-- Material Design Bootstrap -->
-	  	<link href="../css/mdb.min.css" rel="stylesheet">
+	  	<link href="../../css/mdb.min.css" rel="stylesheet">
 	  	<!-- Your custom styles (optional) -->
-	  	<link href="../css/style.css" rel="stylesheet">
+	  	<link href="../../css/style.css" rel="stylesheet">
 	</head>
+	<?php
+
+	if(!isset($_SESSION["intLine"]))
+	{
+		echo "Cart empty";
+		exit();
+	} ?>
 	<body class="fixed-sn pink-skin" style="background-color: #eeeeee;">
 
 		<!--Double navigation-->
@@ -43,7 +50,7 @@
                 <!-- Logo -->
                 <li>
                     <div class="logo-wrapper waves-light">
-                        <a href="employee_home.php"><p class="text-white text-center" style="font-size: 24px;">Select Book</p></a>
+                        <a href="../employee_home.php"><p class="text-white text-center" style="font-size: 24px;">Select Book</p></a>
                     </div>
                 </li>
                 <!--/. Logo -->
@@ -51,7 +58,7 @@
                 <li>
                     <ul class="collapsible collapsible-accordion">
                       <li class="mb-2">
-                        <a href="employee_home.php" class="waves-effect" style="font-size: 18px;"><i class="fas fa-home"></i>&nbsp; Home </a>
+                        <a href="../employee_home.php" class="waves-effect" style="font-size: 18px;"><i class="fas fa-home"></i>&nbsp; Home </a>
                       </li>
 
                         <li class="mb-2">
@@ -62,28 +69,28 @@
                           <a class="collapsible-header waves-effect arrow-r" style="font-size: 16px;"><i class="fas fa-shopping-cart"></i>&nbsp; สั่งซื้อและขายสินค้า <i class="fas fa-angle-down rotate-icon"></i></a>
                             <div class="collapsible-body">
                                 <ul class="list-unstyled">
-                                    <li><a href="order.php" class="waves-effect" style="font-size: 14px;"><i class="fas fa-shopping-cart"></i>&nbsp; สั่งซื้อหนังสือกับสำนักพิมพ์</a>
+                                    <li><a href="../order.php" class="waves-effect" style="font-size: 14px;"><i class="fas fa-shopping-cart"></i>&nbsp; สั่งซื้อหนังสือกับสำนักพิมพ์</a>
                                     </li>
-                                    <li><a href="sales.php" class="waves-effect" style="font-size: 14px;"><i class="fas fa-shopping-cart"></i>&nbsp; ขายสินค้า</a>
+                                    <li><a href="../sales.php" class="waves-effect" style="font-size: 14px;"><i class="fas fa-shopping-cart"></i>&nbsp; ขายสินค้า</a>
                                     </li>
                                 </ul>
                             </div>
                         </li>
 
-                         <li class="mb-2">
-                          <a href="order_list.php" class="collapsible-header waves-effect "style="font-size: 16px;"><i class="fas fa-cash-register"></i>&nbsp; รายการขายสินค้าทั้งหมด </a>
+                          <li class="mb-2">
+                          <a href="../order_list.php" class="collapsible-header waves-effect "style="font-size: 16px;"><i class="fas fa-cash-register"></i>&nbsp; รายการขายสินค้าทั้งหมด </a>
                         </li>
 
                          <li class="mb-2">
-                          <a href="order_list_publisher.php" class="collapsible-header waves-effect "style="font-size: 16px;"><i class="fas fa-cash-register"></i>&nbsp; รายการสั่งซื้อจากสำนักพิมพ์ </a>
+                          <a href="../order_list_publisher.php" class="collapsible-header waves-effect "style="font-size: 16px;"><i class="fas fa-cash-register"></i>&nbsp; รายการสั่งซื้อจากสำนักพิมพ์ </a>
                         </li>
 
                         <li class="mb-2">
-                          <a href="customer_list.php" class="collapsible-header waves-effect "style="font-size: 18px;"><i class="fas fa-user"></i>&nbsp; สมาชิกลูกค้า </a>
+                          <a href="../customer_list.php" class="collapsible-header waves-effect "style="font-size: 18px;"><i class="fas fa-user"></i>&nbsp; สมาชิกลูกค้า </a>
                         </li>
 
                         <li class="mb-2">
-                          <a href="employee_list.php" class="collapsible-header waves-effect "style="font-size: 18px;"><i class="fas fa-user-tie"></i>&nbsp; สมาชิกพนักงาน </a>
+                          <a href="../employee_list.php" class="collapsible-header waves-effect "style="font-size: 18px;"><i class="fas fa-user-tie"></i>&nbsp; สมาชิกพนักงาน </a>
                         </li>
 
                     </ul>
@@ -101,7 +108,7 @@
             </div>
             <!-- Breadcrumb-->
             <div class="breadcrumb-dn mr-auto">
-                <a href="employee_home.php" class="btn btn-outline-light"> Select Book </a>
+                <a href="../employee_home.php" class="btn btn-outline-light"> Select Book </a>
             </div>
             <ul class="nav navbar-nav nav-flex-icons ml-auto">
                 <li class="nav-item dropdown">
@@ -110,14 +117,14 @@
 			          <i class="fas fa-user"></i>&nbsp;&nbsp; <?=$_SESSION['e_name']?> <?=$user['e_surname']?>&nbsp;</a>
 			        <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
 			          <a class="dropdown-item" data-target="#profile" data-toggle="modal">My account</a>
-			          <a class="dropdown-item" href="employee_logout.php">Log out</a>
+			          <a class="dropdown-item" href="../employee_logout.php">Log out</a>
 			        </div>
 		      </li>
             </ul>
         </nav>
 
        <!-- Modal profile -->
-        <form action="edit_profile.php" method="post">
+        <form action="../edit_profile.php" method="post">
         	<div class="modal fade" id="profile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
 		  aria-hidden="true">
 		  <!-- Change class .modal-sm to change the size of the modal -->
@@ -271,41 +278,65 @@
 
     <main>
     	<div class="container-fluid" style="background-color: #ffffff; border-radius: 20px; padding: 20px;box-shadow: 0px 0px 25px 10px #1e272e; margin-top: 50px; padding: 50px;">
-    		<div class="form-group text-center ">
-    			<label class="text-primary text-center" style="font-size: 35px;"> สมาชิกลูกค้า </label>
+    		<div class="form-group  text-center ">
+    			<label class="text-primary" style="font-size: 35px;"> รายการสั่งซื้อ </label>
     		</div><br>
     		<div class="table-responsive text-nowrap">
     			<table class="table table-hover">
-	    			<thead class="text-primary text-center">
-	    				<tr>
-	    					<th style="font-size: 24px;"> รหัสพนักงาน</th>
-	    					<th style="font-size: 24px;"> ชื่อ </th>
-	    					<th style="font-size: 24px;"> นามสกุล </th>	    					
-	    					<th style="font-size: 24px;"> ที่อยู่ </th>
-	    					<th style="font-size: 24px;"> จังหวัด </th>
-	    					<th style="font-size: 24px;"> ประเทศ </th>
-	    					<th style="font-size: 24px;"> รหัสไปรษณีย์ </th>
-	    					<th style="font-size: 24px;"> เบอร์โทรศัพท์ </th>
-	    				</tr>
-	    			</thead>
-	    			<tbody class="text-center">
-	    				<?php 
-	    					while ($employeeList=$stmt->fetch()) { ?>
-	    						<tr>
-	    							<td style="font-size: 18px;"> <?=$employeeList['e_id']?> </td>
-	    							<td style="font-size: 18px;"> <?=$employeeList['e_name']?> </td>
-	    							<td style="font-size: 18px;"> <?=$employeeList['e_surname']?> </td>
-	    							<td style="font-size: 18px;"> <?=$employeeList['e_address']?> </td>
-	    							<td style="font-size: 18px;"> <?=$employeeList['e_district']?> </td>
-	    							<td style="font-size: 18px;"> <?=$employeeList['e_province']?> </td>
-	    							<td style="font-size: 18px;"> <?=$employeeList['e_postcode']?> </td>
-	    							<td style="font-size: 18px;"> <?=$employeeList['e_tel']?> </td>
-	    						</tr>
-	    					<?php }
-	    				?>
-	    			</tbody>
-	    		</table>
-    		</div>   		
+					<thead class="text-primary  text-center">
+						<tr>
+							<th style="font-size: 24px;">รหัสหนังสือ</th>
+							<th style="font-size: 24px;">ชื่อหนังสือ</th>
+							<th style="font-size: 24px;">ราคา</th>
+							<th style="font-size: 24px;">จำนวน</th>
+							<th style="font-size: 24px;">ราคารวม</th>
+						</tr>
+					</thead>
+					<tbody class=" text-center">
+						<?php
+						  $Total = 0;
+						  $SumTotal = 0;
+
+						  for($i=0;$i<=(int)$_SESSION["intLine"];$i++)
+						  {
+							  if($_SESSION["strBID"][$i] != "")
+							  {
+							  	$stmt=$pdo->prepare("SELECT * FROM book WHERE b_id = ?");
+							  	$stmt->bindParam(1,$_SESSION['strBID'][$i]);
+								$stmt->execute();
+								$objResult = $stmt->fetch();
+								$Total = $_SESSION["strQty"][$i] * $objResult["b_price"];
+								$SumTotal = $SumTotal + $Total;
+							  ?>
+							  <tr>
+								<td><?php echo $_SESSION["strBID"][$i];?></td>
+								<td><?php echo $objResult["b_name"];?></td>
+								<td><?php echo $objResult["b_price"];?> บาท</td>
+								<td><?php echo $_SESSION["strQty"][$i];?></td>
+								<td><?php echo number_format($Total,2);?> บาท</td>
+								<td><a class="btn btn-outline-danger" href="delete.php?Line=<?php echo $i;?>"><i class="fas fa-trash"></i> ลบสินค้า</a></td>
+							  </tr>
+							  <?php
+							  }
+						  }
+						  ?>
+					</tbody>
+				</table><br>
+				<div class="form-group">
+					<label class="text-primary" style="font-size: 20px;">ราคาสินค้าทั้งหมด : </label> <label class="text-primary" style="font-size: 28px;"> <?php echo number_format($SumTotal,2);?> บาท.</label>
+				</div>
+				<div class="form-row">
+					<a href="../sales.php" class="btn btn-outline-primary">เพิ่มสินค้า</a>
+					<?php
+						if($SumTotal > 0)
+						{
+					?>
+					 <a href="checkout.php" class="btn btn-info">ชำระสินค้า</a>
+					<?php
+						}
+					?>
+				</div><br>	
+    		</div>		
 		</div>
     </main>
 		
@@ -320,13 +351,13 @@
     <!-- Footer -->
 	<!-- SCRIPTS -->
   <!-- JQuery -->
-  <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
+  <script type="text/javascript" src="../../js/jquery-3.3.1.min.js"></script>
   <!-- Bootstrap tooltips -->
-  <script type="text/javascript" src="../js/popper.min.js"></script>
+  <script type="text/javascript" src="../../js/popper.min.js"></script>
   <!-- Bootstrap core JavaScript -->
-  <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
   <!-- MDB core JavaScript -->
-  <script type="text/javascript" src="../js/mdb.min.js"></script>
+  <script type="text/javascript" src="../../js/mdb.min.js"></script>
   <script type="text/javascript">
         // SideNav Button Initialization
     $(".button-collapse").sideNav();

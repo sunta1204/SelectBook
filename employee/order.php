@@ -14,60 +14,10 @@
 	$stmt2=$pdo->prepare("SELECT * FROM employee WHERE e_id = ?");
 	$stmt2->bindParam(1,$_SESSION['e_id']);
 	$stmt2->execute();
-	$user=$stmt2->fetch(); 
+	$user=$stmt2->fetch();
 
-	if(isset($_POST["add_to_cart"]))  
-	 {  
-	      if(isset($_SESSION["shopping_cart"]))  
-	      {  
-	           $item_array_id = array_column($_SESSION["shopping_cart"], "item_id");  
-	           if(!in_array($_GET["id"], $item_array_id))  
-	           {  
-	                $count = count($_SESSION["shopping_cart"]);  
-	                $item_array = array(  
-	                     'item_id'               =>     $_GET["id"],  
-	                     'item_b_id'               =>     $_POST["b_id"],  
-	                     'item_b_name'          =>     $_POST["b_name"],  
-	                     'item_o_qty'          =>     $_POST["o_qty"] , 
-	                     'item_o_price'          =>     $_POST["b_price"]
-	                );  
-	                $_SESSION["shopping_cart"][$count] = $item_array;  
-	           }  
-	           else  
-	           {  
-	                echo '<script>alert("Item Already Added")</script>';  
-	                echo '<script>window.location="order.php"</script>';  
-	           }  
-	      }  
-	      else  
-	      {  
-	           $item_array = array(  
-	               	'item_id'               =>     $_GET["id"],  
-	               	'item_b_id'               =>     $_POST["b_id"],  
-	                'item_b_name'          =>     $_POST["b_name"],  
-	                'item_o_qty'          =>     $_POST["o_qty"] , 
-	                'item_o_price'          =>     $_POST["b_price"]  
-	           );  
-	           $_SESSION["shopping_cart"][0] = $item_array;  
-	      }  
-	 }
-
-	 if(isset($_GET["action"]))  
-	 {  
-	      if($_GET["action"] == "delete")  
-	      {  
-	           foreach($_SESSION["shopping_cart"] as $keys => $values)  
-	           {  
-	                if($values["item_id"] == $_GET["id"])  
-	                {  
-	                     unset($_SESSION["shopping_cart"][$keys]);  
-	                     echo '<script>alert("Item Removed")</script>';  
-	                     echo '<script>window.location="order.php"</script>';  
-	                }  
-	           }  
-	      }  
-	 }    
-
+	$stmt3=$pdo->prepare("SELECT * FROM publisher");
+	$stmt3->execute();
 ?>
 <!DOCTYPE html>
 <html>
@@ -109,29 +59,33 @@
                         <li class="mb-2">
                           <a data-target="#add_book" data-toggle="modal" class="collapsible-header waves-effect" style="font-size: 18px;"><i class="fas fa-book"></i>&nbsp; เพิ่มหนังสือ</a> 
                         </li>
-                        <!--
-                        <li class="mb-2" >
-                          <a class="collapsible-header waves-effect arrow-r" style="font-size: 18px;"><i class="far fa-hand-pointer"></i>&nbsp; Room Type <i class="fas fa-angle-down rotate-icon"></i></a>
+
+                         <li class="mb-2" >
+                          <a class="collapsible-header waves-effect arrow-r" style="font-size: 16px;"><i class="fas fa-shopping-cart"></i>&nbsp; สั่งซื้อและขายสินค้า <i class="fas fa-angle-down rotate-icon"></i></a>
                             <div class="collapsible-body">
                                 <ul class="list-unstyled">
-                                    <li><a href="air_room.html" class="waves-effect" style="font-size: 14px;">Air-conditioned Room</a>
+                                    <li><a href="order.php" class="waves-effect" style="font-size: 14px;"><i class="fas fa-shopping-cart"></i>&nbsp; สั่งซื้อหนังสือกับสำนักพิมพ์</a>
                                     </li>
-                                    <li><a href="fan_room.html" class="waves-effect" style="font-size: 14px;">Fan Room</a>
+                                    <li><a href="sales.php" class="waves-effect" style="font-size: 14px;"><i class="fas fa-shopping-cart"></i>&nbsp; ขายสินค้า</a>
                                     </li>
                                 </ul>
                             </div>
-                        </li> -->
+                        </li>
 
-                        <li  class="mb-2">
-                          <a href="order.php" class="collapsible-header waves-effect "style="font-size: 18px;"><i class="fas fa-shopping-cart"></i>&nbsp; รายการสั่งซื้อ </a>
+                         <li class="mb-2">
+                          <a href="order_list.php" class="collapsible-header waves-effect "style="font-size: 16px;"><i class="fas fa-cash-register"></i>&nbsp; รายการขายสินค้าทั้งหมด </a>
+                        </li>
+
+                         <li class="mb-2">
+                          <a href="order_list_publisher.php" class="collapsible-header waves-effect "style="font-size: 16px;"><i class="fas fa-cash-register"></i>&nbsp; รายการสั่งซื้อจากสำนักพิมพ์ </a>
                         </li>
 
                         <li class="mb-2">
-                          <a href="customer_list.php" class="collapsible-header waves-effect "style="font-size: 18px;"><i class="fas fa-user"></i>&nbsp; สมากชิกลูกค้า </a>
+                          <a href="customer_list.php" class="collapsible-header waves-effect "style="font-size: 18px;"><i class="fas fa-user"></i>&nbsp; สมาชิกลูกค้า </a>
                         </li>
 
                         <li class="mb-2">
-                          <a href="employee_list.php" class="collapsible-header waves-effect "style="font-size: 18px;"><i class="fas fa-user-tie"></i>&nbsp; สมากชิกพนักงาน </a>
+                          <a href="employee_list.php" class="collapsible-header waves-effect "style="font-size: 18px;"><i class="fas fa-user-tie"></i>&nbsp; สมาชิกพนักงาน </a>
                         </li>
 
                     </ul>
@@ -265,20 +219,6 @@
 							<div class="card-body px-lg-5 pt-0 my-4">
 								<div class="form-row">			            
 								    <div class="col">
-								        <?php 
-								        $order_id = rand(0,9); 
-								        $order_id .= rand(0,9);
-								        $order_id .= rand(0,9);
-								        $order_id .= rand(0,9);
-								        $order_id .= rand(0,9);
-								        ?>
-								        <div class="md-form">
-								            <i class="fas fa-file-signature prefix"></i>
-								            <input type="text" id="b_id" required="" name="b_id" class="form-control" readonly="" value="<?=$order_id?>">
-								            <label for="b_id">รหัสหนังสือ</label>
-								        </div>					                   
-								    </div>
-								    <div class="col">
 								        <div class="md-form">
 								            <i class="fas fa-book prefix"></i>
 								            <input type="text" name="b_name" id="b_name" class="form-control" required="">
@@ -333,97 +273,70 @@
 
     <main>
     	<div class="container-fluid" style="background-color: #ffffff; border-radius: 20px; padding: 20px;box-shadow: 0px 0px 25px 10px #1e272e; margin-top: 50px; padding: 50px;">
-    		<div class="form-group text-center ">
-    			<label class="text-primary text-center" style="font-size: 35px;"> รายการหนังสือ </label>
-    		</div><br>
-    		<div class="table-responsive text-nowrap">
-    			<table class="table table-hover">
-					<thead class="text-primary  text-center">
-						<tr>
-							<th style="font-size: 24px;">รหัสหนังสือ</th>
-							<th style="font-size: 24px;">ชื่อหนังสือ</th>
-							<th style="font-size: 24px;">ผู้แต่ง</th>
-							<th style="font-size: 24px;">ราคา</th>
-							<th style="font-size: 24px;">จำนวนที่มี</th>
-							<th style="font-size: 24px;">จำนวนที่ต้องการซื้อ</th>
-							<th></th>
-						</tr>
-					</thead>
-					<tbody class=" text-center">				
-						<?php 
-							while ($bookList=$stmt->fetch()) { ?>
-								<form method="post" action="order.php?action=add&id=<?=$bookList['b_id']?>">
-									<tr>
-										<td style="font-size: 18px;"> <?=$bookList['b_id']?> </td>
-										<td style="font-size: 18px;"><?=$bookList['b_name']?></td>
-										<td style="font-size: 18px;"><?=$bookList['b_author']?></td>
-										<td style="font-size: 18px;"><?=$bookList['b_price']?> บาท</td>
-										<td style="font-size: 18px;"><?=$bookList['b_stock']?> เล่ม</td>
-										<td>
-											<select class="browser-default custom-select" name="o_qty">
-												<option selected="" value="" disabled>เลือกจำนวนที่ต้องการสั่งซื้อ</option>
-												<?php for ($i=1; $i <= 300  ; $i++) { 
-													echo "<option value='$i'>$i</option>";
-												} ?>
-											</select>
-											<input type="hidden" name="b_id" value="<?=$bookList['b_id']?>">
-											<input type="hidden" name="b_name" value="<?=$bookList['b_name']?>">
-											<input type="hidden" name="b_price" value="<?=$bookList['b_price']?>">
-											<input type="hidden" name="b_stock" value="<?=$bookList['b_stock']?>">		
-										</td>
-										<td>
-											<button type="submit" class="btn btn-primary" name="add_to_cart" value="Add to Cart"> เพิ่มลงตระกร้า </button>
-										</td>
-									</tr>
-								</form>						
-							<?php } 				
-						?>
-					</tbody>
-				</table>
-    		</div>   		
-		</div>
-		<div class="container-fluid" style="background-color: #ffffff; border-radius: 20px; padding: 20px;box-shadow: 0px 0px 25px 10px #1e272e; margin-top: 50px; padding: 50px;margin-bottom: 150px;">
-			<div class="table-responsive text-nowrap">
-				<table class="table table-hover">
-					<thead class="text-primary  text-center"> 
-						<tr>
-							<th style="font-size: 24px;">ชื่อสินค้า</th>
-							<th style="font-size: 24px;">จำนวน</th>
-							<th style="font-size: 24px;">ราคา</th>
-							<th style="font-size: 24px;">รวม</th>
-							<th style="font-size: 24px;"></th>
-						</tr>
-					</thead>
-					<tbody class="text-center">
-						 <?php   
-                          if(!empty($_SESSION["shopping_cart"]))  
-                          {  
-                               $total = 0;  
-                               foreach($_SESSION["shopping_cart"] as $keys => $values)  
-                               {  
-                          ?>  
-                          <tr>  
-                               <td style="font-size: 18px;"><?php echo $values["item_b_name"]; ?></td>  
-                               <td style="font-size: 18px;"><?php echo $values["item_o_qty"]; ?></td>  
-                               <td style="font-size: 18px;"><?php echo $values["item_o_price"]; ?> บาท </td>  
-                               <td style="font-size: 18px;"><?php echo number_format($values["item_o_qty"] * $values["item_o_price"], 2); ?> บาท </td>  
-                               <td><a href="order.php?action=delete&id=<?php echo $values["item_id"]; ?>"><span class="btn btn-outline-danger waves-effect">Remove</span></a></td>  
-                          </tr>  
-                          <?php  
-                                    $total = $total + ($values["item_o_qty"] * $values["item_o_price"]);  
-                               }  
-                          ?>  
-                          <tr>  
-                               <td colspan="3" align="right" style="font-size: 20px;">Total</td>  
-                               <td align="right" style="font-size: 20px;"> <?php echo number_format($total, 2); ?> บาท</td>  
-                               <td></td>  
-                          </tr>  
-                          <?php  
-                          }  
-                          ?>  
-					</tbody>
-				</table>
-			</div>
+    		<form action="order_book.php" method="post">
+    			<div class="card">
+    				<h2 class="card-header primary-color white-text text-center py-4">
+   				 	<strong>สั่งซื้อหนังสือจากสำนักพิมพ์</strong>
+  					</h5>
+  					<div class="card-body">
+  							<div class="form-group">
+  								<label class="text-info" style="font-size: 18px;">ชื่อหนังสือ</label>
+  								<select class="browser-default custom-select" name="b_id">
+								<?php while ($row=$stmt->fetch()) { ?>
+									<option value="<?=$row['b_id']?>" id="b_id<?=$row['b_id']?>" > <?= $row['b_name']?> </option>
+								<?php } ?>
+							</select> 
+  							</div>
+  						<div class="form-row">
+  							<div class="col">
+  								<div class="md-form">
+  									<i class="fas fa-dollar-sign prefix"></i>
+  									<input type="number" id="o_price" name="o_price" class="form-control" required="" onkeyup="calc(this)">
+  									<label for="o_price"> ราคา </label>
+  								</div>
+  							</div>
+  							<div class="col">
+  								<div class="md-form">
+  									<i class="fas fa-layer-group prefix"></i>
+  									<input type="number" id="o_qty" name="o_qty" class="form-control" required="" onkeyup="calc(this)">
+  									<label for="o_qty"> จำนวนที่สั่งซื้อ </label>
+  								</div>
+  							</div>
+  							<script>
+						        var x = 0;
+						        var y = 0;
+						        var z = 0;
+						        function calc(obj) {
+						            x = document.getElementById("o_price").value;
+						            y = document.getElementById("o_qty").value;
+						            z = x * y;
+						            document.getElementById('o_total').value = z;
+						            
+						        }
+						    </script>
+  							<div class="col">
+  								<div class="md-form">
+  									<i class="fas fa-dollar-sign prefix"></i>
+  									<input type="text" id="o_total" name="o_total" class="form-control" readonly="" required="" placeholder="ราคารวมทั้งหมด">				
+  								</div>
+  							</div>
+  						</div>
+  						<div class="form-group">
+  							<label class="text-info"  style="font-size: 18px;"> สำนักพิมพ์ </label>
+  							<select class="browser-default custom-select" name="p_id">
+									<?php while ($row3=$stmt3->fetch()) { ?>
+										<option  id="p_id<?=$row3['p_id']?>" value="<?=$row3['p_id']?>"> <?= $row3['p_name']?> </option>
+									<?php } ?>
+								</select>
+  						</div>
+  						<div class="form-group">
+  							<div class="md-form">
+  								<button type="submit" class="btn btn-outline-primary"> สั่งซื้อหนังสือ </button>
+  							</div>
+  						</div>
+  					</div>
+    			</div>
+    		</form>
 		</div>
     </main>
 		
