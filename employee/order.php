@@ -279,13 +279,21 @@
    				 	<strong>สั่งซื้อหนังสือจากสำนักพิมพ์</strong>
   					</h5>
   					<div class="card-body">
-  							<div class="form-group">
-  								<label class="text-info" style="font-size: 18px;">ชื่อหนังสือ</label>
-  								<select class="browser-default custom-select" name="b_id">
-								<?php while ($row=$stmt->fetch()) { ?>
-									<option value="<?=$row['b_id']?>" id="b_id<?=$row['b_id']?>" > <?= $row['b_name']?> </option>
-								<?php } ?>
-							</select> 
+  							<div class="form-row">
+  								<div class="col">
+  									<div class="md-form">
+	  									<i class="fas fa-book prefix"></i>
+	  									<input type="text" name="b_name" id="b_name1" class="form-control" required="">
+	  									<label for="b_name1">ชื่อหนังสือ</label>
+  									</div>  	
+  								</div>
+  								<div class="col">
+  									<div class="md-form">
+  										<i class="fas fa-user prefix"></i>
+  										<input type="text" name="b_author" id="b_author1" class="form-control" required="">
+  										<label for="b_author1"> ผู้แต่ง </label>
+  									</div>
+  								</div>															
   							</div>
   						<div class="form-row">
   							<div class="col">

@@ -279,7 +279,7 @@
 					<thead class="text-primary  text-center">
 						<tr>
 							<th style="font-size: 24px;">รหัสสั่งซื้อ</th>
-							<th style="font-size: 24px;">รหัสหนังสือ</th>
+							<th style="font-size: 24px;">ชื่อหนังสือ</th>
 							<th style="font-size: 24px;">ชื่อสำนักพิมพ์</th>
 							<th style="font-size: 24px;">จำนวนที่สั่ง</th>
 							<th style="font-size: 24px;">ราคา</th>
@@ -293,7 +293,15 @@
 							while ($order_list_publisher=$stmt->fetch()) { ?>
 								<tr>
 									<td style="font-size: 18px;"> <?=$order_list_publisher['o_id']?> </td>
-									<td style="font-size: 18px;"><?=$order_list_publisher['b_id']?></td>
+									<td style="font-size: 18px;">
+										<?php 
+											$stmt4=$pdo->prepare("SELECT b_name FROM book WHERE b_id = ?");
+											$stmt4->bindParam(1,$order_list_publisher['b_id']);
+											$stmt4->execute();
+											$b_name = $stmt4->fetch();
+										?>
+										<?=$b_name['b_name']?>	
+										</td>
 									<td style="font-size: 18px;">
 										<?php 
 											$stmt3=$pdo->prepare("SELECT p_name FROM publisher WHERE p_id = ?");

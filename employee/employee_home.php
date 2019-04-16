@@ -270,7 +270,7 @@
     <!--/.Double navigation-->
 
     <main>
-    	<div class="container-fluid" style="background-color: #ffffff; border-radius: 20px; padding: 20px;box-shadow: 0px 0px 25px 10px #1e272e; margin-top: 50px; padding: 50px;">
+    	<div class="container-fluid" style="background-color: #ffffff; border-radius: 20px; padding: 20px;box-shadow: 0px 0px 25px 10px #1e272e; margin-top: 50px; padding: 50px;margin-bottom: 100px;">
     		<div class="form-group  text-center ">
     			<label class="text-primary" style="font-size: 35px;"> รายการหนังสือ </label>
     		</div><br>
