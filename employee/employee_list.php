@@ -272,7 +272,7 @@
     <main>
     	<div class="container-fluid" style="background-color: #ffffff; border-radius: 20px; padding: 20px;box-shadow: 0px 0px 25px 10px #1e272e; margin-top: 50px; padding: 50px;">
     		<div class="form-group text-center ">
-    			<label class="text-primary text-center" style="font-size: 35px;"> สมาชิกลูกค้า </label>
+    			<label class="text-primary text-center" style="font-size: 35px;"> สมาชิกพนักงาน </label>
     		</div><br>
     		<div class="table-responsive text-nowrap">
     			<table class="table table-hover">
